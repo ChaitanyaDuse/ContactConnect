@@ -10,8 +10,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.dnr.contactconnect.ApiService;
+import com.dnr.contactconnect.InjectHelper;
 import com.dnr.contactconnect.R;
 import com.dnr.contactconnect.model.Contact;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +24,8 @@ import butterknife.OnClick;
 
 public class ContactDetailsActivity extends AppCompatActivity {
     private Contact contact;
+    @Inject
+    ApiService apiService;
     @BindView(R.id.tv_email_address)
     TextView tv_email_address;
     @BindView(R.id.tv_phone_number)
@@ -31,6 +37,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_details);
+        InjectHelper.getRootComponent().inject(this);
         ButterKnife.bind(this);
         contact = getIntent().getParcelableExtra(Contact.class.getSimpleName());
         if (contact != null) {
@@ -72,7 +79,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
 
     private void call(String number) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:"+number));
+        intent.setData(Uri.parse("tel:" + number));
         startActivity(intent);
     }
 

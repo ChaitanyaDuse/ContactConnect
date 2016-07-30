@@ -9,9 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.dnr.contactconnect.ApiService;
+import com.dnr.contactconnect.InjectHelper;
 import com.dnr.contactconnect.R;
 
 import java.util.regex.Pattern;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,7 +25,8 @@ import butterknife.OnClick;
 public class AddContactActivity extends AppCompatActivity {
     private static final String PHONE_REGEX = "^[0-9]{12,15}$";
 
-
+    @Inject
+    ApiService apiService;
     @BindView(R.id.et_first_name)
     EditText et_first_name;
 
@@ -42,6 +47,7 @@ public class AddContactActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
+        InjectHelper.getRootComponent().inject(this);
         ButterKnife.bind(this);
 
 
@@ -56,48 +62,32 @@ public class AddContactActivity extends AppCompatActivity {
     }
 
     public final static boolean isValidEmail(String target) {
-        if (target.isEmpty()) {
-            return true;
-        } else {
-            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
-        }
+        return  (target.isEmpty() || android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches());
+
     }
 
     public static boolean isPhoneNumber(String text, boolean required) {
         // pattern doesn't match so returning false
-        if (required && !Pattern.matches(PHONE_REGEX, text)) {
-            return false;
-        }
+        return !(required && !Pattern.matches(PHONE_REGEX, text));
 
-        return true;
     }
 
     public static boolean isValidName(String text, boolean required) {
-        if (required && text.length() > 3) {
-
-            return true;
-        } else return false;
+        return required && text.length() > 3;
     }
 
 
     private boolean isValidated() {
         boolean isValidated = true;
-        if (isValidEmail(et_email_address.getText().toString())) {
-
-        } else {
+        if (!isValidEmail(et_email_address.getText().toString())) {
             et_email_address.setError("Invalid email id.");
             isValidated = false;
         }
-
-        if (isPhoneNumber(et_phone_number.getText().toString(), true)) {
-
-        } else {
+        if (!isPhoneNumber(et_phone_number.getText().toString(), true)) {
             et_phone_number.setError("Invalid phone number");
             isValidated = false;
         }
-        if (isValidName(et_first_name.getText().toString(), true)) {
-
-        } else {
+        if (!isValidName(et_first_name.getText().toString(), true)) {
             et_first_name.setError("Name should have at least four characters");
             isValidated = false;
         }

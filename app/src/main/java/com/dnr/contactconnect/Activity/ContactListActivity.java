@@ -6,21 +6,20 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.dnr.contactconnect.MyApiEndpointInterface;
+import com.dnr.contactconnect.ApiService;
+import com.dnr.contactconnect.InjectHelper;
 import com.dnr.contactconnect.R;
 import com.dnr.contactconnect.model.Contact;
 import com.dnr.contactconnect.model.ContactListAdapter;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,10 +28,12 @@ import butterknife.OnItemClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ContactListActivity extends AppCompatActivity {
+
+    @Inject
+    ApiService apiService;
+
     ProgressDialog progressDialog;
     @BindView(R.id.lv_contacts)
     ListView listView;
@@ -45,6 +46,7 @@ public class ContactListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);
+        InjectHelper.getRootComponent().inject(this);
         ButterKnife.bind(this);
         progressDialog = new ProgressDialog(this);
 
@@ -55,8 +57,8 @@ public class ContactListActivity extends AppCompatActivity {
 
         contactListAdapter = new ContactListAdapter(getApplicationContext(), contactList);
         listView.setAdapter(contactListAdapter);
-        // getUsers();
-        getDummyUsers();
+         getUsers();
+        //getDummyUsers();
     }
 
     @OnItemClick(R.id.lv_contacts)
@@ -74,16 +76,8 @@ public class ContactListActivity extends AppCompatActivity {
 
 
     private void getUsers() {
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://gojek-contacts-app.herokuapp.com")
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        MyApiEndpointInterface myApiEndpointInterface = retrofit.create(MyApiEndpointInterface.class);
-        Call<List<Contact>> call = myApiEndpointInterface.getUser();
+        Call<List<Contact>> call = apiService.getUser();
         progressDialog.show();
         call.enqueue(new Callback<List<Contact>>() {
             @Override
