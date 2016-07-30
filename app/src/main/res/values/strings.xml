@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ContactConnect</string>
+    <string name="title_activity_contact_list">ContactListActivity</string>
+    <string name="first_name">First name</string>
+    <string name="email_address">Email address</string>
+    <string name="phone_number">Phone number</string>
+    <string name="last_name">Last name</string>
+    <string name="save_contact">Save</string>
+    <string name="user_profile_pic">User\'s profile pic</string>
+</resources>
