@@ -25,10 +25,10 @@
 
         <activity
             android:name=".activity.AddContactActivity"
-            android:label="@string/title_activity_contact_list"></activity>
+            android:label="@string/title_add_contact"></activity>
         <activity
             android:name=".activity.ContactDetailsActivity"
-            android:label="@string/title_activity_contact_list"></activity>
+            android:label="@string/title_contact_details"></activity>
 
 
     </application>

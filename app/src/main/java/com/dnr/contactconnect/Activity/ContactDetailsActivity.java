@@ -6,16 +6,18 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.dnr.contactconnect.ApiService;
-import com.dnr.contactconnect.di.InjectHelper;
 import com.dnr.contactconnect.R;
+import com.dnr.contactconnect.di.InjectHelper;
 import com.dnr.contactconnect.model.Contact;
 
 import java.io.File;
@@ -26,6 +28,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
@@ -42,18 +45,22 @@ import retrofit2.Response;
 
 public class ContactDetailsActivity extends AppCompatActivity {
     private Contact contact;
+
     @Inject
     ApiService apiService;
+    @BindView(R.id.base_layout)
+    LinearLayout base_layout;
     @BindView(R.id.tv_email_address)
     TextView tv_email_address;
     @BindView(R.id.tv_phone_number)
     TextView tv_phone_number;
     @BindView(R.id.tv_user_full_name)
     TextView tv_user_full_name;
+    @BindView(R.id.iv_user_profile_pic)
+    CircleImageView iv_user_profile_pic;
 
     ProgressDialog progressDialog;
 
-    private ShareActionProvider mShareActionProvider;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +70,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         progressDialog = new ProgressDialog(this);
         contact = getIntent().getParcelableExtra(Contact.class.getSimpleName());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getContactDetails(contact.getId());
 
 
@@ -136,7 +144,10 @@ public class ContactDetailsActivity extends AppCompatActivity {
             share.putExtra(Intent.EXTRA_TEXT, contact.getPhoneNumber());
 
             startActivity(Intent.createChooser(share, "Share Contact!"));
+        } else if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -205,12 +216,21 @@ public class ContactDetailsActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     contact = response.body();
                     bindData();
+                } else {
+                    Snackbar snackbar = Snackbar
+                            .make(base_layout, R.string.error_string_contact_details, Snackbar.LENGTH_LONG);
+
+                    snackbar.show();
                 }
             }
 
             @Override
             public void onFailure(Call<Contact> call, Throwable t) {
                 progressDialog.dismiss();
+                Snackbar snackbar = Snackbar
+                        .make(base_layout, R.string.no_internet, Snackbar.LENGTH_LONG);
+
+                snackbar.show();
             }
         });
     }
@@ -221,6 +241,11 @@ public class ContactDetailsActivity extends AppCompatActivity {
             tv_phone_number.setText(contact.getPhoneNumber());
             tv_user_full_name.setText(contact.getFullName());
             tv_user_full_name.setCompoundDrawablesWithIntrinsicBounds(getFvoriteIcon(contact.getFavorite()), null, null, null);
+            Glide.with(getApplicationContext())
+                    .load(contact.getProfilePic())
+                    .placeholder(R.drawable.ic_action_user)
+                    .into(iv_user_profile_pic);
+
         }
 
     }

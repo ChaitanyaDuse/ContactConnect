@@ -9,6 +9,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.dnr.contactconnect.R;
 import com.dnr.contactconnect.model.Contact;
 
@@ -17,6 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ContactListExpandableAdapter extends BaseExpandableListAdapter {
@@ -117,7 +119,13 @@ public class ContactListExpandableAdapter extends BaseExpandableListAdapter {
         // Populate the data into the template view using the data object
         contactViewHolder.tv_user_first_name.setText(user.getFirstName());
         contactViewHolder.tv_user_last_name.setText(user.getLastName());
-        // Return the completed view to render on screen
+
+        Glide
+                .with(_context.getApplicationContext())
+                .load(user.getProfilePic())
+                .placeholder(R.drawable.ic_action_user)
+                .into(contactViewHolder.iv_profile);
+
         return convertView;
     }
 
@@ -131,6 +139,8 @@ public class ContactListExpandableAdapter extends BaseExpandableListAdapter {
         TextView tv_user_first_name;
         @BindView(R.id.tv_user_last_name)
         TextView tv_user_last_name;
+        @BindView(R.id.iv_profile)
+        CircleImageView iv_profile;
 
         public ContactViewHolder(View view) {
             ButterKnife.bind(this, view);
