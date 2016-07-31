@@ -1,9 +1,9 @@
-package com.dnr.contactconnect;
+package com.dnr.contactconnect.di;
 
 
-import com.dnr.contactconnect.Activity.AddContactActivity;
-import com.dnr.contactconnect.Activity.ContactDetailsActivity;
-import com.dnr.contactconnect.Activity.ContactListActivity;
+import com.dnr.contactconnect.activity.AddContactActivity;
+import com.dnr.contactconnect.activity.ContactDetailsActivity;
+import com.dnr.contactconnect.activity.ContactListActivity;
 
 import javax.inject.Singleton;
 

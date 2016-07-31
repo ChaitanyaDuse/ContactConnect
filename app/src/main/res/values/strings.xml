@@ -10,4 +10,5 @@
     <string name="share">Share as</string>
     <string name="vcard">Vcard</string>
     <string name="text">Text</string>
+    <string name="favorite">favorite</string>
 </resources>

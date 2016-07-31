@@ -1,4 +1,4 @@
-package com.dnr.contactconnect.Activity;
+package com.dnr.contactconnect.activity;
 
 
 import android.app.ProgressDialog;
@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.dnr.contactconnect.ApiService;
-import com.dnr.contactconnect.InjectHelper;
+import com.dnr.contactconnect.di.InjectHelper;
 import com.dnr.contactconnect.R;
 import com.dnr.contactconnect.model.Contact;
 

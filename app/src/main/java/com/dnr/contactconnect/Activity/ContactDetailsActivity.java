@@ -1,8 +1,7 @@
-package com.dnr.contactconnect.Activity;
+package com.dnr.contactconnect.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +14,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.dnr.contactconnect.ApiService;
-import com.dnr.contactconnect.InjectHelper;
+import com.dnr.contactconnect.di.InjectHelper;
 import com.dnr.contactconnect.R;
 import com.dnr.contactconnect.model.Contact;
 

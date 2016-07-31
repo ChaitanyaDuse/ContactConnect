@@ -1,4 +1,6 @@
-package com.dnr.contactconnect;
+package com.dnr.contactconnect.di;
+
+
 
 public class InjectHelper {
      

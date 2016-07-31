@@ -5,7 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Contact implements Comparable<Contact>, Parcelable {
-
+    public static  final String IS_FAVORITE = "0_favorite";
     private int id;
     private String first_name;
     private String last_name;
@@ -25,6 +25,15 @@ public class Contact implements Comparable<Contact>, Parcelable {
         this.first_name = first_name;
         this.last_name = last_name;
         this.phone_number = number;
+
+    }
+
+
+    public Contact(String first_name, String last_name, String number,boolean isFavorite) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.phone_number = number;
+        this.favorite = isFavorite;
 
     }
 

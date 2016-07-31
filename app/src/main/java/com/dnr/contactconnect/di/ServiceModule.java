@@ -1,5 +1,6 @@
-package com.dnr.contactconnect;
+package com.dnr.contactconnect.di;
 
+import com.dnr.contactconnect.ApiService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
