@@ -3,6 +3,9 @@
     package="com.dnr.contactconnect">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,12 +25,10 @@
 
         <activity
             android:name=".Activity.AddContactActivity"
-            android:label="@string/title_activity_contact_list">
-        </activity>
+            android:label="@string/title_activity_contact_list"></activity>
         <activity
             android:name=".Activity.ContactDetailsActivity"
-            android:label="@string/title_activity_contact_list">
-        </activity>
+            android:label="@string/title_activity_contact_list"></activity>
 
 
     </application>

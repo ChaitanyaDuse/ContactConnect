@@ -57,8 +57,8 @@ public class ContactListActivity extends AppCompatActivity {
 
         contactListAdapter = new ContactListAdapter(getApplicationContext(), contactList);
         listView.setAdapter(contactListAdapter);
-         getUsers();
-        //getDummyUsers();
+        getUsers();
+        // getDummyUsers();
     }
 
     @OnItemClick(R.id.lv_contacts)
@@ -69,8 +69,7 @@ public class ContactListActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.fab)
-     public void openAddContact()
-    {
+    public void openAddContact() {
         gotoAddContactActivity();
     }
 

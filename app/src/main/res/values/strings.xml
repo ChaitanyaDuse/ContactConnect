@@ -7,4 +7,7 @@
     <string name="last_name">Last name</string>
     <string name="save_contact">Save</string>
     <string name="user_profile_pic">User\'s profile pic</string>
+    <string name="share">Share as</string>
+    <string name="vcard">Vcard</string>
+    <string name="text">Text</string>
 </resources>

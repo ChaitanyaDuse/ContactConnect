@@ -4,7 +4,7 @@ package com.dnr.contactconnect.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Contact implements Comparable<Contact>,Parcelable {
+public class Contact implements Comparable<Contact>, Parcelable {
 
     private int id;
     private String first_name;
@@ -22,9 +22,9 @@ public class Contact implements Comparable<Contact>,Parcelable {
     }
 
     public Contact(String first_name, String last_name, String number) {
-         this.first_name = first_name;
-         this.last_name  = last_name;
-         this.phone_number = number;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.phone_number = number;
 
     }
 
@@ -201,4 +201,11 @@ public class Contact implements Comparable<Contact>,Parcelable {
             return new Contact[size];
         }
     };
+
+    public String getFullName() {
+        if (this.last_name != null && this.last_name.length() > 0) {
+            return this.first_name + " " + this.last_name;
+        } else
+            return this.first_name;
+    }
 }
