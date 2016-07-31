@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -48,6 +49,8 @@ public class ContactDetailsActivity extends AppCompatActivity {
 
     @Inject
     ApiService apiService;
+    @BindView((R.id.progress))
+    LinearLayout progressView;
     @BindView(R.id.base_layout)
     LinearLayout base_layout;
     @BindView(R.id.tv_email_address)
@@ -188,19 +191,24 @@ public class ContactDetailsActivity extends AppCompatActivity {
     }
 
     private void getContactDetails(int id) {
-        progressDialog.show();
+        showProgress(true);
         Call<Contact> call = apiService.getContactdetails(id);
         call.enqueue(new Callback<Contact>() {
             @Override
             public void onResponse(Call<Contact> call, Response<Contact> response) {
-                progressDialog.dismiss();
+                showProgress(false);
                 contact = response.body();
                 bindData();
             }
 
             @Override
             public void onFailure(Call<Contact> call, Throwable t) {
-                progressDialog.dismiss();
+
+                showProgress(false);
+                Snackbar snackbar = Snackbar
+                        .make(base_layout, R.string.no_internet, Snackbar.LENGTH_LONG);
+
+                snackbar.show();
             }
         });
 
@@ -248,6 +256,16 @@ public class ContactDetailsActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    private void showProgress(boolean show) {
+        if (show) {
+            base_layout.setVisibility(View.GONE);
+            progressView.setVisibility(View.VISIBLE);
+        } else {
+            base_layout.setVisibility(View.VISIBLE);
+            progressView.setVisibility(View.GONE);
+        }
     }
 
 }

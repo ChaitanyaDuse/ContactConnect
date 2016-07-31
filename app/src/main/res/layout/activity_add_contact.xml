@@ -38,6 +38,7 @@
             android:id="@+id/et_phone_number"
             style="@style/style_et_add_contact"
             android:hint="@string/phone_number"
+
             android:inputType="phone" />
 
         <EditText

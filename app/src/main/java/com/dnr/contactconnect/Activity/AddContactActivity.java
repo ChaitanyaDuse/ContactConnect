@@ -28,7 +28,7 @@ import retrofit2.Response;
 
 
 public class AddContactActivity extends AppCompatActivity {
-    private static final String PHONE_REGEX = "^[0-9]{12,15}$";
+    private static final String PHONE_REGEX = "^[+][0-9]{10,15}$";
 
     @Inject
     ApiService apiService;
