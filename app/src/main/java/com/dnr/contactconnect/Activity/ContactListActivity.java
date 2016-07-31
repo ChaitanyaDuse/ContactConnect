@@ -41,7 +41,6 @@ public class ContactListActivity extends AppCompatActivity {
     ApiService apiService;
 
 
-
     @BindView(R.id.empty)
     LinearLayout emptyView;
     @BindView((R.id.progress))
@@ -106,14 +105,18 @@ public class ContactListActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Contact>>() {
             @Override
             public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
-                contactList.addAll(response.body());
-                hideProgress();
-                if (contactList.size() > 0) {
 
+
+                if (response.body().size() > 0) {
+                    contactList.clear();
+                    _listDataChild.clear();
+                    headerList.clear();
+                    contactList.addAll(response.body());
                     Collections.sort(contactList);
                     populateMap();
                     contactListAdapter.notifyDataSetChanged();
                 }
+                hideProgress();
             }
 
             @Override
@@ -134,43 +137,6 @@ public class ContactListActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private void getDummyUsers() {
-
-        contactList.add(new Contact("Chaitanya", "ab", "8980536994", true));
-        contactList.add(new Contact("Archi", "ab", "8980536994", true));
-        contactList.add(new Contact("Guddi", "ab", "8980536994", true));
-        contactList.add(new Contact("Xenon", "ab", "8980536994", true));
-        contactList.add(new Contact("Abhijit", "ab", "8980536994"));
-        contactList.add(new Contact("Sukhada", "ab", "8980536994"));
-        contactList.add(new Contact("Omkar", "ab", "8980536994"));
-        contactList.add(new Contact("Udyam", "ab", "8980536994"));
-        contactList.add(new Contact("Sagar", "ab", "8980536994"));
-        contactList.add(new Contact("Leonerd", "ab", "8980536994"));
-        contactList.add(new Contact("Kalki", "ab", "8980536994"));
-        contactList.add(new Contact("Riya", "ab", "8980536994"));
-        contactList.add(new Contact("Hardik", "ab", "8980536994"));
-        contactList.add(new Contact("Bhuvin", "ab", "8980536994"));
-        contactList.add(new Contact("Priyamvada", "ab", "8980536994"));
-        contactList.add(new Contact("Falguni", "ab", "8980536994"));
-        contactList.add(new Contact("Eicher", "ab", "8980536994"));
-        contactList.add(new Contact("Dipen", "ab", "8980536994"));
-        contactList.add(new Contact("Gaurav", "ab", "8980536994"));
-        contactList.add(new Contact("Jahgirdar", "ab", "8980536994"));
-        contactList.add(new Contact("Madhukar", "ab", "8980536994"));
-        contactList.add(new Contact("Nimish", "ab", "8980536994"));
-        contactList.add(new Contact("Orlando", "ab", "8980536994"));
-        contactList.add(new Contact("Quandeel", "ab", "8980536994"));
-        contactList.add(new Contact("Sofia", "ab", "8980536994"));
-        contactList.add(new Contact("Tanmayee", "ab", "8980536994"));
-        contactList.add(new Contact("Urchi", "ab", "8980536994"));
-        contactList.add(new Contact("Vijay", "ab", "8980536994"));
-        contactList.add(new Contact("Zeenat", "ab", "8980536994"));
-
-        Collections.sort(contactList);
-        populateMap();
-        contactListAdapter.notifyDataSetChanged();
-
-    }
 
     private void populateMap() {
         for (int j = 0; j < contactList.size(); j++) {
